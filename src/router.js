@@ -3,11 +3,11 @@ import useAuth from "./composable/useAuth";
 
 import Index from "./pages/index.vue";
 import About from "./pages/about.vue";
-import News from "./pages/news.vue";
-import Contact from "./pages/contact.vue";
 import NotFound from "./pages/404.vue";
 import Login from "./pages/login.vue";
-import Secret from "./pages/secret.vue";
+import Applications from "./pages/applications.vue";
+import Bugs from "./pages/bugs.vue";
+import Solutions from "./pages/solutions.vue";
 
 const {isAuthenticated} = useAuth();
 
@@ -23,24 +23,36 @@ const routes = [
         component: About,
     },
     {
-        path: "/news",
-        name: "News",
-        component: News,
-    },
-    {
-        path: "/contact",
-        name: "Contact",
-        component: Contact,
-    },
-    {
         path: "/login",
         name: "Login",
         component: Login,
     },
     {
-        path: "/secret",
-        name: "Secret",
-        component: Secret,
+        path: "/applications",
+        name: "Applications",
+        component: Applications,
+        beforeEnter: (to, from, next) => {
+            if (!isAuthenticated.value) {
+                next("/login");
+            }
+            next();
+        }
+    },
+    {
+        path: "/bugs",
+        name: "Bugs",
+        component: Bugs,
+        beforeEnter: (to, from, next) => {
+            if (!isAuthenticated.value) {
+                next("/login");
+            }
+            next();
+        }
+    },
+    {
+        path: "/solutions",
+        name: "Solutions",
+        component: Solutions,
         beforeEnter: (to, from, next) => {
             if (!isAuthenticated.value) {
                 next("/login");
