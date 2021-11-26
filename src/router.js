@@ -8,6 +8,7 @@ import Login from "./pages/login.vue";
 import Applications from "./pages/applications.vue";
 import Bugs from "./pages/bugs.vue";
 import Solutions from "./pages/solutions.vue";
+import Application from "./pages/application.vue";
 
 const {isAuthenticated} = useAuth();
 
@@ -31,6 +32,17 @@ const routes = [
         path: "/applications",
         name: "Applications",
         component: Applications,
+        beforeEnter: (to, from, next) => {
+            if (!isAuthenticated.value) {
+                next("/login");
+            }
+            next();
+        }
+    },
+    {
+        path: "/application/:id?",
+        name: "Application",
+        component: Application,
         beforeEnter: (to, from, next) => {
             if (!isAuthenticated.value) {
                 next("/login");
