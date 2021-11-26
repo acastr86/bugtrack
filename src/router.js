@@ -9,6 +9,8 @@ import Applications from "./pages/applications.vue";
 import Bugs from "./pages/bugs.vue";
 import Solutions from "./pages/solutions.vue";
 import Application from "./pages/application.vue";
+import Bug from "./pages/bug.vue";
+import Solution from "./pages/solution.vue";
 
 const {isAuthenticated} = useAuth();
 
@@ -62,9 +64,31 @@ const routes = [
         }
     },
     {
+        path: "/bug/:id?",
+        name: "Bug",
+        component: Bug,
+        beforeEnter: (to, from, next) => {
+            if (!isAuthenticated.value) {
+                next("/login");
+            }
+            next();
+        }
+    },
+    {
         path: "/solutions",
         name: "Solutions",
         component: Solutions,
+        beforeEnter: (to, from, next) => {
+            if (!isAuthenticated.value) {
+                next("/login");
+            }
+            next();
+        }
+    },
+    {
+        path: "/solution/:id?",
+        name: "Solution",
+        component: Solution,
         beforeEnter: (to, from, next) => {
             if (!isAuthenticated.value) {
                 next("/login");
