@@ -16,10 +16,10 @@ const {value: username, errorMessage: emailError} = useField("username");
 const {value: password, errorMessage: passwordError} = useField("password");
 
 import UndrawLogin from "vue-undraw/UndrawLogin.vue";
-import useAuth from "../composable/useAuth";
+import authentication from "../composable/useAuth";
 import useError from "../composable/useError";
 
-const {isAuthenticated, login, signup, googleLogin} = useAuth();
+const {isAuthenticated, login, signup, googleLogin} = authentication();
 
 const router = useRouter();
 

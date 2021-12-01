@@ -1,31 +1,31 @@
 import {ref} from "vue";
-import { nanoid } from "nanoid";
+import axios from "axios";
+
 import { useBug } from "./useBug";
 
 const {bugs} = useBug();
 
-const temp = [
-    {
-        id: nanoid(),
-        description: "change dialing rule",
-        solvedDate: '2021-11-25',
-        solvedBy: "Bob",
-        bugID : bugs.value.filter(x => x.status == "Pending")[0].id
-    },
-    {
-        id: nanoid(),
-        description: "update scheduling feature",
-        solvedDate: '2021-10-13',
-        solvedBy: "Bob",
-        bugID : bugs.value.filter(x => x.status == "Pending")[1].id
-    }
-];
+const api = axios.create({
+    baseURL: import.meta.env.VITE_BUG_TRACK_API_BASE_URL
+});
+
+
+let temp = [];
 
 const solutions = ref([]);
 
 export const useSolution = () => {
 
-    solutions.value = [...temp];
+    const getSolutions = async () => {
+        const response = await api.get(`solutions?username=${import.meta.env.VITE_BUG_TRACK_API_USER}&password=${import.meta.env.VITE_BUG_TRACK_API_PASS}`);
+
+        if(response.status === 200){
+            temp = response.data;
+
+            solutions.value = [...temp];
+        }
+    };
+
 
     const searchSolution = (solutionName) => {
         const regex = new RegExp(solutionName, 'i');
@@ -44,7 +44,7 @@ export const useSolution = () => {
     };
 
     const addSolution = (solution) =>{
-        const newSolution = {id: nanoid(), ...solution};
+        const newSolution = {...solution};
         temp.push(newSolution);
         solutions.value = [...temp];
         return {newSolution};
@@ -53,8 +53,10 @@ export const useSolution = () => {
 
     const getSolution = (id) =>{
 
-        return solutions.value.find(x => x.id === id);
+        return solutions.value.find(x => x.id == id);
     };
+
+    getSolutions();
 
     return {solutions, searchSolution, addSolution, updateSolution, getSolution};
 }

@@ -10,7 +10,7 @@ const searchItem = ref("");
 
 <template>
    
-<div>
+<div v-if="bugs">
     <input type="text" 
     v-model="searchItem"
     @change="searchBug(searchItem)"
@@ -46,6 +46,9 @@ const searchItem = ref("");
     </div>
     
 </div>
+<div v-else>
+        Loading...
+ </div>
  
     
 </template>

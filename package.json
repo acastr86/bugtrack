@@ -8,8 +8,10 @@
   },
   "dependencies": {
     "@vueuse/core": "^6.7.4",
+    "@vueuse/firebase": "^7.1.2",
+    "axios": "^0.24.0",
+    "dotenv": "^10.0.0",
     "firebase": "^9.4.0",
-    "nanoid": "^3.1.30",
     "vee-validate": "^4.5.5",
     "vue": "^3.2.16",
     "vue-router": "^4.0.12",

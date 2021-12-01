@@ -1,29 +1,25 @@
 
 import {ref} from "vue";
-import { nanoid } from "nanoid";
+import axios from "axios";
 
-const temp = [
-    {
-        id: nanoid(),
-        name: "Telemarketing Management",
-        description: "Manage the Telemarketing campaign",
-        url: "https://tele.app.com",
-        type: "business",
-    },
-    {
-        id: nanoid(),
-        name: "Resource Management",
-        description: "Manage the human resources",
-        url: "https://hr.app.com",
-        type: "erp",
-    }
-];
-
+let temp = [];
 const applications = ref([]);
+
+const api = axios.create({
+    baseURL: import.meta.env.VITE_BUG_TRACK_API_BASE_URL
+});
 
 export const useApplication = () => {
 
-    applications.value = [...temp];
+    const getApplications = async () => {
+        const response = await api.get(`applications?username=${import.meta.env.VITE_BUG_TRACK_API_USER}&password=${import.meta.env.VITE_BUG_TRACK_API_PASS}`);
+
+        if(response.status === 200){
+            temp = response.data;
+
+            applications.value = [...temp];
+        }
+    };
 
     const searchApplication = (appName) => {
         const regex = new RegExp(appName, 'i');
@@ -42,7 +38,7 @@ export const useApplication = () => {
     };
 
     const addApplication = (app) =>{
-        const newApp = {id: nanoid(), ...app};
+        const newApp = {...app};
         temp.push(newApp);
         applications.value = [...temp];
         return {newApp};
@@ -51,8 +47,10 @@ export const useApplication = () => {
 
     const getApplication = (id) =>{
 
-        return applications.value.find(x => x.id === id);
+        return applications.value.find(x => x.id == id);
     };
+
+    getApplications();
 
     return {applications, searchApplication, addApplication, updateApplication, getApplication};
 }

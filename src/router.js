@@ -1,5 +1,5 @@
 import { createRouter, createWebHashHistory, createWebHistory } from "vue-router";
-import useAuth from "./composable/useAuth";
+import authentication from "./composable/useAuth";
 
 import Index from "./pages/index.vue";
 import About from "./pages/about.vue";
@@ -12,7 +12,7 @@ import Application from "./pages/application.vue";
 import Bug from "./pages/bug.vue";
 import Solution from "./pages/solution.vue";
 
-const {isAuthenticated} = useAuth();
+const {isAuthenticated} = authentication();
 
 const routes = [
     {

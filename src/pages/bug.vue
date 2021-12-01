@@ -55,9 +55,11 @@ if(bugID){
         bugDescription.value = bug.description;
         bugStatus.value = bug.status;
         bugPriority.value = bug.priority;
-        reportedDate.value = bug.reportedDate;
+        reportedDate.value = bug.reportedDate.substring(0,10);
         reportedBy.value = bug.reportedBy;
         application.value = bug.appID;  
+
+       
         
         
     }

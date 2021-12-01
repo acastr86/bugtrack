@@ -45,7 +45,7 @@ if(solutionID){
 
     if(solution){
         solDescription.value = solution.description;
-        solvedDate.value = solution.solvedDate;
+        solvedDate.value = solution.solvedDate.substring(0,10);;
         solvedBy.value = solution.solvedBy;
         bug.value = solution.bugID;
 

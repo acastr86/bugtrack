@@ -10,7 +10,7 @@ const searchApp = ref("");
 
 <template>
    
-<div>
+<div v-if="applications">
     <input type="text" 
     v-model="searchApp"
     @change="searchApplication(searchApp)"
@@ -46,6 +46,9 @@ const searchApp = ref("");
     </div>
     
 </div>
+<div v-else>
+        Loading...
+ </div>
  
     
 </template>
