@@ -49,8 +49,8 @@ const authentication = () => {
 
     const logout = async () => {
         await signOut(firebaseAuth);
-        isAuthenticated.value = false;
-        user.value = "";
+       // isAuthenticated.value = false;
+        //user.value = "";
     };
 
     return { isAuthenticated, login, signup, logout, user, googleLogin};

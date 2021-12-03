@@ -6,7 +6,11 @@ import { useApplication } from "./useApplication";
 const {applications} = useApplication();
 
 const api = axios.create({
-    baseURL: import.meta.env.VITE_BUG_TRACK_API_BASE_URL
+    baseURL: import.meta.env.VITE_BUG_TRACK_API_BASE_URL,
+    params: {
+        username : import.meta.env.VITE_BUG_TRACK_API_USER,
+        password : import.meta.env.VITE_BUG_TRACK_API_PASS
+    } 
 });
 
 let temp = [];
@@ -16,7 +20,7 @@ const bugs = ref([]);
 export const useBug = () => {
 
     const getBugs = async () => {
-        const response = await api.get(`bugs?username=${import.meta.env.VITE_BUG_TRACK_API_USER}&password=${import.meta.env.VITE_BUG_TRACK_API_PASS}`);
+        const response = await api.get("bugs");
 
         if(response.status === 200){
             temp = response.data;

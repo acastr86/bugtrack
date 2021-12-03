@@ -14,6 +14,7 @@ import Solution from "./pages/solution.vue";
 
 const {isAuthenticated} = authentication();
 
+
 const routes = [
     {
         path: "/",
@@ -35,6 +36,7 @@ const routes = [
         name: "Applications",
         component: Applications,
         beforeEnter: (to, from, next) => {
+
             if (!isAuthenticated.value) {
                 next("/login");
             }

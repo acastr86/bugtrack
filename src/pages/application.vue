@@ -17,7 +17,7 @@ const {id : appID} = route.params;
 
 
 const appSchema = yup.object({
-    appName: yup.string().required().label("Application Name"),
+    appName: yup.string().min(10).required().label("Application Name"),
     appDescription: yup.string().required().label("Application Description"),
     appUrl: yup.string().url().label("Application Web Page"),
     appType: yup.string().required().label("Application Type"),
@@ -37,14 +37,16 @@ const {value: appType, errorMessage: appTypeError} = useField("appType");
 
 if(appID){
 
-    
-    const application = getApplication(appID);
+    const application =  getApplication(appID);
 
-    if(application){
+      if(application){
         
+    
         appName.value = application.name;
         appDescription.value = application.description;
-        appUrl.value = application.url;
+        if(application.url){
+            appUrl.value = application.url;
+        }
         appType.value = application.type;
     }
 }
