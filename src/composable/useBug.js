@@ -1,12 +1,13 @@
 import {ref} from "vue";
 import axios from "axios";
+import { StatusCodes } from "http-status-codes";
 
 import { useApplication } from "./useApplication";
 
 const {applications} = useApplication();
 
 const api = axios.create({
-    baseURL: import.meta.env.VITE_BUG_TRACK_API_BASE_URL,
+    baseURL: `${import.meta.env.VITE_BUG_TRACK_API_BASE_URL}/bugs`,
     params: {
         username : import.meta.env.VITE_BUG_TRACK_API_USER,
         password : import.meta.env.VITE_BUG_TRACK_API_PASS
@@ -20,9 +21,9 @@ const bugs = ref([]);
 export const useBug = () => {
 
     const getBugs = async () => {
-        const response = await api.get("bugs");
+        const response = await api.get("");
 
-        if(response.status === 200){
+        if(response.status === StatusCodes.OK){
             temp = response.data;
 
             bugs.value = [...temp];
@@ -36,22 +37,28 @@ export const useBug = () => {
         bugs.value = temp.filter(x => regex.test(x.name));
     };
 
-    const updateBug = (id, bug) =>{
-        const index = temp.findIndex(x => x.id == id);
-        temp[index] = {id, ... bug};
-        const updatedBug = temp[index];
+    const updateBug = async (id, bug) =>{
+        const updatedBug = {...bug};
+        const response = await api.put(`/${id}`, updatedBug);
 
-        bugs.value = [...temp];
+       
+        if(response.status === StatusCodes.OK){
+            await getBugs();
+        }
 
-        
         return {updatedBug};
 
     };
 
-    const addBug = (bug) =>{
+    const addBug = async (bug) =>{
         const newBug = {...bug};
-        temp.push(newBug);
-        bugs.value = [...temp];
+        const response = await api.post("", newBug);
+
+       
+        if(response.status === StatusCodes.CREATED){
+            await getBugs();
+        }
+
         return {newBug};
 
     };

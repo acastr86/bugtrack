@@ -20,7 +20,7 @@ const {id : bugID} = route.params;
 
 
 const bugSchema = yup.object({
-    bugName: yup.string().required().label("Bug Name"),
+    bugName: yup.string().min(10).required().label("Bug Name"),
     bugDescription: yup.string().required().label("Bug Description"),
     bugStatus: yup.string().required().label("Bug Status"),
     bugPriority: yup.number().positive().required().label("Bug Priority"),
