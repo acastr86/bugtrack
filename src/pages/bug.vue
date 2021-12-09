@@ -67,7 +67,7 @@ if(bugID){
 
 
 const saveBug = () => {
-    const bug = {name: bugName.value, description: bugDescription.value, status: bugStatus.value, priority: bugPriority.value, reportedDate: reportedDate.value, reportedBy: reportedBy.value, appID: application.value};
+    const bug = {name: bugName.value, description: bugDescription.value, status: bugStatus.value, priority: bugPriority.value ? bugPriority.value : 5, reportedDate: reportedDate.value, reportedBy: reportedBy.value, appID: application.value};
     
     
   
